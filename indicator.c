@@ -43,14 +43,13 @@ int main (void)
   if (wiringPiSetup () == -1)
     return 1 ;
 
-  int i,j,c;
+  int i,j,k, digit;
   for (i=0; i<7; i++) {
     pinMode (pins[i], OUTPUT);
   }
 
-  int swichPins[4] = {21, 22, 26, 23};
+  int swichPins[4] = {22, 26, 23, 21};
 
-  c=0;
 
   for (i=0; i<4; i++){
       pinMode (swichPins[i], OUTPUT);
@@ -59,11 +58,12 @@ int main (void)
 
   for (;;)
   {
+   k = 1;
    for (j=0;j<4;j++){
-   // printf("%d\n",j);
+    digit = (count % (10*k)) / k;
     for (i=0; i<7;i++){
-      if (digits[count][i]>-1){
-        digitalWrite (digits[count][i], 1);
+      if (digits[digit][i]>-1){
+        digitalWrite (digits[digit][i], 1);
 
       }
 
@@ -72,18 +72,16 @@ int main (void)
     delay(5);               // mS
     digitalWrite(swichPins[j],1);
     for (i=0; i<7;i++){
-      if (digits[count][i]>-1){
-        digitalWrite (digits[count][i], 0);
+      if (digits[digit][i]>-1){
+        digitalWrite (digits[digit][i], 0);
       }
     }
+    k=k*10;
    }
-    c++;
-    if (c>10){
-      count++;
-      c=0;
-    }
-    if (count > 9) { count = 0; }
-   // delay (10);
+    count++;
+    printf("%d\n", count);
+    if (count > 9999) { count = 0; }
+    // delay (10);
   }
   return 0;
 }
