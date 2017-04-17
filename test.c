@@ -9,21 +9,33 @@
 
 int main (void)
 {
+  int pins[8] = {7, 0, 1, 2, 3, 4, 5, 6};
+  int count=0;
+
   printf ("Raspberry Pi blink\n") ;
+
 
   if (wiringPiSetup () == -1)
     return 1 ;
 
-  pinMode (0, OUTPUT) ;         // aka BCM_GPIO pin 17
+  int i =0;
+  for ( i=0; i<7; i++) {
+    pinMode (pins[i], OUTPUT);
+  }
+
   pinMode (21, OUTPUT) ;
+  digitalWrite (21, 0) ;
   for (;;)
   {
-    printf("1 \n");
-    digitalWrite (0, 1) ;       // On
-    digitalWrite (21, 0) ;
+    printf ("%i", count);
+    digitalWrite (pins[count], 1);
+
     delay (500) ;               // mS
-    digitalWrite (0, 0) ;       // Off
-    delay (500) ;
+    digitalWrite (pins[count], 0);
+    count++;
+
+    if (count > 7) { count = 0; }
+    delay (500);
   }
-  return 0 ;
+  return 0;
 }
