@@ -48,4 +48,4 @@ int main (void)
 
 Convert physical pins into Wiring Pi
 
-![shema](https://github.com/RaymondProduction/gpio-raspberry-pi-cpp-/master/image/rspberry_pi_gpio_pins.png)
+![shema](https://raw.githubusercontent.com/RaymondProduction/gpio-raspberry-pi-cpp-/master/image/rspberry_pi_gpio_pins.png)
