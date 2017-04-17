@@ -17,7 +17,7 @@
     { 6, 3, 5, 7, 4, 0,-1}
   };
   int swichPins[4] = { 23, 21,22, 26};
-  int timeDigit[4];
+  int timeDigit[6];
 
   time_t now;
   struct tm *tm;
@@ -45,11 +45,11 @@ int main (void)
   {
    k = 1;
    for (j=0;j<4;j++){
-    digit = (count % (10*k)) / k;
+    getTimeDigit();
     showDigit(timeDigit[j], 1);
     digitalWrite(swichPins[j],0);
     if (j==0) {
-      digitalWrite(1 , timeDigit[2]%2);
+      digitalWrite(1 , timeDigit[4]%2);
     }
     delay(5);               // mS
     digitalWrite(swichPins[j],1);
@@ -59,7 +59,6 @@ int main (void)
     showDigit(timeDigit[j], 0);
     k=k*10;
    }
-    getTimeDigit();
     //printf("%d\n", timeDigit[2]%2);
     // delay (10);
   }
@@ -70,12 +69,15 @@ int main (void)
     int tmp;
      now = time(0);
      tm = localtime (&now);
-     tmp = tm->tm_min;
+    tmp = tm->tm_hour;
      timeDigit[0]=(tmp % 10);
      timeDigit[1]=(tmp % 100)/10;
-     tmp = tm->tm_sec;
+     tmp = tm->tm_min;
      timeDigit[2]=(tmp % 10);
      timeDigit[3]=(tmp % 100)/10;
+     tmp = tm->tm_sec;
+     timeDigit[4]=(tmp % 10);
+     timeDigit[5]=(tmp % 100)/10;
      return 0;
   }
   int showDigit(d,s){
