@@ -37,7 +37,7 @@ int main (void)
   if (wiringPiSetup () == -1)
     return 1 ;
 
-  int i,j,k, d=150;
+  int i,j,k, d=150000,dd=2000;
 
 
 
@@ -53,8 +53,10 @@ int main (void)
     if (j==0) {
       digitalWrite(1 , timeDigit[4]%2);
     }
-    delay(d);               // mS
-    if (d>5) {d=d-1;};
+//    delay(d);               // mS
+    delayMicroseconds (d);
+    if (d<20000) {dd=100;};
+    if (d>1000) {d=d-dd;};
     digitalWrite(swichPins[j],1);
     if (j==0) {
       digitalWrite(1 , 0);
@@ -62,6 +64,7 @@ int main (void)
     showDigit(timeDigit[j], 0);
     k=k*10;
    }
+   printf("%d\n",d);
     //printf("%d\n", timeDigit[2]%2);
     // delay (10);
   }
