@@ -64,7 +64,7 @@ int main (void)
     showDigit(timeDigit[j], 0);
     k=k*10;
    }
-   printf("%d\n",d);
+   //printf("%d\n",d);
     //printf("%d\n", timeDigit[2]%2);
     // delay (10);
   }
