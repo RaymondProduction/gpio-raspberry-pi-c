@@ -22,6 +22,48 @@
   time_t now;
   struct tm *tm;
 
+//==================================
+  int getTimeDigit(){
+    int tmp;
+     now = time(0);
+     tm = localtime (&now);
+    tmp = tm->tm_hour;
+     timeDigit[0]=(tmp % 10);
+     timeDigit[1]=(tmp % 100)/10;
+     tmp = tm->tm_min;
+     timeDigit[2]=(tmp % 10);
+     timeDigit[3]=(tmp % 100)/10;
+     tmp = tm->tm_sec;
+     timeDigit[4]=(tmp % 10);
+     timeDigit[5]=(tmp % 100)/10;
+     return 0;
+  }
+  int showDigit(int d,int s){
+    int i;
+    for (i=0; i<7;i++){
+      if (digits[d][i]>-1){
+        digitalWrite (digits[d][i], s);
+      }
+    }
+    return 0;
+  }
+
+  int initPort(){
+    int i;
+    //pinMode (6, OUTPUT);
+    //digitalWrite (6, 0);
+    for (i=0; i<8; i++) {
+      printf("%d\n", i);
+      pinMode (pins[i], OUTPUT);
+      digitalWrite (pins[i], 0);
+    }
+    for (i=0; i<5; i++){
+      printf("%d\n", i);
+      pinMode (swichPins[i], OUTPUT);
+      digitalWrite (swichPins[i], 1);
+    }
+    return 0;
+  }
 
 int main (void)
 {
@@ -61,6 +103,11 @@ int main (void)
     if (j==0) {
       digitalWrite(1 , 0);
     }
+    // Add effect every 30 minutes
+    if ((timeDigit[3]==0 || timeDigit[3]==3) && timeDigit[2]==0  && timeDigit[5]==0 && timeDigit[4]==0) {
+      d=150000;
+      dd=2000;
+    }
     showDigit(timeDigit[j], 0);
     k=k*10;
    }
@@ -70,48 +117,6 @@ int main (void)
   }
   return 0;
 }
-//==================================
-  int getTimeDigit(){
-    int tmp;
-     now = time(0);
-     tm = localtime (&now);
-    tmp = tm->tm_hour;
-     timeDigit[0]=(tmp % 10);
-     timeDigit[1]=(tmp % 100)/10;
-     tmp = tm->tm_min;
-     timeDigit[2]=(tmp % 10);
-     timeDigit[3]=(tmp % 100)/10;
-     tmp = tm->tm_sec;
-     timeDigit[4]=(tmp % 10);
-     timeDigit[5]=(tmp % 100)/10;
-     return 0;
-  }
-  int showDigit(d,s){
-    int i;
-    for (i=0; i<7;i++){
-      if (digits[d][i]>-1){
-        digitalWrite (digits[d][i], s);
-      }
-    }
-    return 0;
-  }
-
-  int initPort(){
-    int i;
-    //pinMode (6, OUTPUT);
-    //digitalWrite (6, 0);
-    for (i=0; i<8; i++) {
-      printf("%d\n", i);
-      pinMode (pins[i], OUTPUT);
-      digitalWrite (pins[i], 0);
-    }
-    for (i=0; i<5; i++){
-      printf("%d\n", i);
-      pinMode (swichPins[i], OUTPUT);
-      digitalWrite (swichPins[i], 1);
-    }
-    return 0;
-  }
 
 
 /*
